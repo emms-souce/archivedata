@@ -15,7 +15,8 @@ const token = localStorage.getItem("token");
 const router = useRouter()
   useEffect(() => {
     if (!token) {
-      router.push("/login")
+      router.push("/login")    
+      console.log("ok")
     }
   },[])
   return (
