@@ -4,7 +4,6 @@ import SignupModal from "@/components/singUpModal";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-
 // Adapter l'interface User aux données de l'API
 interface Role {
   uuid: string;
@@ -24,45 +23,43 @@ interface User {
   date_modified: string;
 }
 
-
 const Dashboard: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [c, setC] = useState(true);
   const [users, setUsers] = useState<User[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
 
+  const deleteUser = async (userId: string) => {
+    try {
+      const token = localStorage.getItem("token");
 
-    const deleteUser = async (userId: string) => {
-      try {
-        const token = localStorage.getItem("token");
-
-        if (!token) {
-          console.error("Token non trouvé");
-          return;
-        }
-
-        const response = await fetch(
-          `https://archive-doc-app.onrender.com/api/v1/users/${userId}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        if (!response.ok) {
-          toast.error("Erreur lors de la suppression de l'utilisateur")
-          throw new Error("Erreur lors de la suppression de l'utilisateur");
-        }
-
-        toast.success("Utilisateur supprimé avec succès");
-        setC(!c)
-      } catch (error) {
-        console.error("Erreur:", error);
+      if (!token) {
+        console.error("Token non trouvé");
+        return;
       }
-    };
+
+      const response = await fetch(
+        `https://archive-doc-app.onrender.com/api/v1/users/${userId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        toast.error("Erreur lors de la suppression de l'utilisateur");
+        throw new Error("Erreur lors de la suppression de l'utilisateur");
+      }
+
+      toast.success("Utilisateur supprimé avec succès");
+      setC(!c);
+    } catch (error) {
+      console.error("Erreur:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -109,18 +106,16 @@ const Dashboard: React.FC = () => {
     const filtered = users.filter(
       (user) =>
         `${user.firstname} ${user.lastname}`.toLowerCase().includes(query) ||
-        user.email.toLowerCase().includes(query) 
+        user.email.toLowerCase().includes(query)
     );
 
     setFilteredUsers(filtered);
   };
 
- 
-
   return (
     <div className="container mx-auto p-5">
       <div className="w-full flex justify-end mb-5">
-       <div>
+        <div>
           <SignupModal />
         </div>
       </div>
@@ -151,48 +146,50 @@ const Dashboard: React.FC = () => {
               </th>
             </tr>
           </thead>
-         <tbody>
-  {filteredUsers?.map((user) => (
-    <tr key={user.uuid} className="hover:bg-gray-100">
-      <td className="py-4 px-6 border-b text-gray-800">
-        {`${user.firstname} ${user.lastname}`}
-      </td>
-      <td className="py-4 px-6 border-b text-gray-800">
-        {user.email}
-      </td>
-      <td className="py-4 px-6 border-b text-gray-800">
-        {user.role.title_fr} {/* Modifier ici pour afficher le titre du rôle */}
-      </td>
-      <td className="py-4 px-6 border-b text-center">
-        <div className="flex justify-center space-x-2">
-          <button
-            onClick={() =>{deleteUser(user.uuid)} }
-            className="bg-red-500 text-white py-1 px-4 rounded hover:bg-red-600 transition-colors"
-          >
-            Supprimer
-          </button>
-          <button
-            onClick={() =>{} }
-            className="bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-600 transition-colors"
-          >
-            Modifier
-          </button>
-        </div>
-      </td>
-    </tr>
-  ))}
-  {filteredUsers.length === 0 && (
-    <tr>
-      <td
-        colSpan={4}
-        className="py-4 px-6 border-b text-center text-gray-500"
-      >
-        Aucun utilisateur trouvé
-      </td>
-    </tr>
-  )}
-</tbody>
-
+          <tbody>
+            {filteredUsers?.map((user) => (
+              <tr key={user.uuid} className="hover:bg-gray-100">
+                <td className="py-4 px-6 border-b text-gray-800">
+                  {`${user.firstname} ${user.lastname}`}
+                </td>
+                <td className="py-4 px-6 border-b text-gray-800">
+                  {user.email}
+                </td>
+                <td className="py-4 px-6 border-b text-gray-800">
+                  {user.role.title_fr}{" "}
+                  {/* Modifier ici pour afficher le titre du rôle */}
+                </td>
+                <td className="py-4 px-6 border-b text-center">
+                  <div className="flex justify-center space-x-2">
+                    <button
+                      onClick={() => {
+                        deleteUser(user.uuid);
+                      }}
+                      className="bg-red-500 text-white py-1 px-4 rounded hover:bg-red-600 transition-colors"
+                    >
+                      Supprimer
+                    </button>
+                    <button
+                      onClick={() => {}}
+                      className="bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-600 transition-colors"
+                    >
+                      Modifier
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+            {filteredUsers.length === 0 && (
+              <tr>
+                <td
+                  colSpan={4}
+                  className="py-4 px-6 border-b text-center text-gray-500"
+                >
+                  Aucun utilisateur trouvé
+                </td>
+              </tr>
+            )}
+          </tbody>
         </table>
       </div>
     </div>

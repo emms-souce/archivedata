@@ -3,8 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+
 
 // Importing icons
 
@@ -20,6 +21,8 @@ const Sidebar = () => {
   ];
 
   const isActive = (href: string) => "dashboard" === href;
+
+ 
 
   return (
     <div>
