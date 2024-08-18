@@ -2,8 +2,9 @@
 
 import SearchBar from "./component/searchBar";
 import PdfCard from "@/components/cardItem";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+
 
 const pdfDocuments = [
   {
@@ -129,6 +130,7 @@ const pdfDocuments = [
   // ... (other items)
 ];
 
+
 const ITEMS_PER_PAGE = 12;
 
 const HomePage: React.FC = () => {
@@ -154,6 +156,8 @@ const HomePage: React.FC = () => {
   );
 
   const totalPages = Math.ceil(filteredDocuments.length / ITEMS_PER_PAGE);
+
+  
 
   return (
     <div className="w-full bg-white">

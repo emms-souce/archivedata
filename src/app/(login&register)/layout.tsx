@@ -14,10 +14,10 @@ export default function RootLayout({
 }>) {
 const router = useRouter()
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      router.push("/user")
-     }
+    // const token = localStorage.getItem("token");
+    // if (token) {
+    //   router.push("/user")
+    //  }
    },[])
   return (
     <html lang="en">

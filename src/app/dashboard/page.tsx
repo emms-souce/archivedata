@@ -8,9 +8,9 @@ const Dashboard = () => {
     return (
         <div className=' container mx-auto p-5 '>
             <div className='grid  grid-cols-1 md:grid-cols-2 items-center lg:grid-cols-3 gap-2'>
-            <Card onButtonClick={()=>{}} buttonText='test buttom' imageUrl='lqsdjkdkqsldsk' description='list des User' title='lqjdskldjqskld' />
-            <Card onButtonClick={()=>{}} buttonText='test buttom' imageUrl='lqsdjkdkqsldsk' description='list des document' title='lqjdskldjqskld' />
-            <Card onButtonClick={()=>{}} buttonText='test buttom' imageUrl='lqsdjkdkqsldsk' description='list des ' title='lqjdskldjqskld' />
+            <Card onButtonClick={()=>{}} buttonText='test buttom' imageUrl='lqsdjkdkqsldsk' description='list des User' title='Utilisateur' />
+            <Card onButtonClick={()=>{}} buttonText='test buttom' imageUrl='lqsdjkdkqsldsk' description='list des document' title='Document' />
+            <Card onButtonClick={()=>{}} buttonText='test buttom' imageUrl='lqsdjkdkqsldsk' description='list des ' title='profile' />
            
                 
             </div>

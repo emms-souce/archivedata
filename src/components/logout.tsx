@@ -22,9 +22,9 @@ const LogoutModal: React.FC = () => {
     <div className="relative">
       <button
         onClick={() => setIsModalOpen(true)}
-        className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition-colors"
+        className=""
       >
-        <div className='rounded-full bg-gray-500 p-1'><FaUser/></div>
+        <div className='rounded-full bg-gray-500 p-1'><FaUser className="text-white"/></div>
       </button>
 
       {isModalOpen && (

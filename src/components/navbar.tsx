@@ -1,14 +1,25 @@
-import React from 'react';
-import { FaSearch, FaUser } from 'react-icons/fa';
-import LogoutModal from './logout';
+import LogoutModal from "./logout";
+import React from "react";
+import { FaSearch, FaUser } from "react-icons/fa";
 
 const Navbar = () => {
-    return (
-        <div className='w-full  flex justify-between  shadow-4xl px-5 bg-blue-200 h-14 items-center py-3'>
-           <p className='w-full text-gray-700 text-4xl font-bold'>Pannel d'Administration</p>
-            <LogoutModal/>
-        </div>
-    );
+  return (
+    <div className="w-full  flex justify-between items-center h-14 px-4 bg-blue-600 shadow-md">
+      <div className="flex items-center space-x-3">
+        {/* Logo or Icon */}
+        <p className="text-white text-xl md:text-3xl font-bold pl-10 md:pl-2">
+          Pannel d'Administration
+        </p>
+      </div>
+
+     
+
+      {/* User and Logout */}
+      <div className="flex items-center space-x-4">
+        <LogoutModal />
+      </div>
+    </div>
+  );
 };
 
 export default Navbar;

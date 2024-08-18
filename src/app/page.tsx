@@ -20,7 +20,7 @@ const page = () => {
     
     return (
         <div className='w-screen min-h-screen flex justify-center items-center'>
-            <div className=' zoom-animation mx-auto text-5xl font-bold text-blue-500'> Se documenter c'est la base </div>
+            <div className=' text-lg  zoom-animation mx-auto md:text-2xl lg:text-5xl font-bold text-blue-500'> Se documenter c'est la base </div>
         </div>
     );
 };
