@@ -130,7 +130,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
           className="w-full max-w-sm mx-auto"
           onSubmit={formik.handleSubmit}
         >
-          <h2 className="text-2xl mb-6 text-center text-blue-400 font-bold">
+          <h2 className="text-2xl mb-6 text-center text-blue-600 font-bold">
             Modifier l'Utilisateur
           </h2>
 
