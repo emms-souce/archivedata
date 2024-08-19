@@ -100,7 +100,7 @@ const DragAndDrop: React.FC = () => {
           }`}
         >
           {selectedFileName
-            ? `Fichier sélectionné : ${selectedFileName}`
+            ? `Fichier ajouté : ${selectedFileName} cliquez ou glissez-deposez pour ajouter un noueau`
             : "Glissez-déposez des fichiers ici ou cliquez pour sélectionner"}
         </p>
       </div>

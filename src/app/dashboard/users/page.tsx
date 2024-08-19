@@ -165,34 +165,35 @@ const Dashboard: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {currentUsers?.map((user) => (
-              <tr key={user.uuid} className="hover:bg-gray-100">
+            {currentUsers?.map((userItem) => (
+              <tr key={userItem.uuid} className="hover:bg-gray-100">
+                 < UpdateModal user={userItem} isOpen={openUpdate} onClose={close} onUserUpdated={open} />
                 <td className="py-4 px-6 border-b text-gray-800">
-                  {`${user.firstname} ${user.lastname}`}
+                  {`${userItem.firstname} ${userItem.lastname}`}
                 </td>
                 <td className="py-4 px-6 border-b text-gray-800">
-                  {user.email}
+                  {userItem.email}
                 </td>
                 <td className="py-4 px-6 border-b text-gray-800">
-                  {user.role.title_fr}
+                  {userItem.role.title_fr}
                 </td>
                 <td className="py-4 px-6 border-b text-center">
                   <div className="flex justify-center space-x-2">
                     <button
                       onClick={() => {
-                        deleteUser(user.uuid);
+                        deleteUser(userItem.uuid);
                       }}
                       className="bg-red-500 text-white py-1 px-4 rounded hover:bg-red-600 transition-colors"
                     >
                       Supprimer
                     </button>
                      <button
-                      onClick={open}
+                      onClick={() => { open(); console.log(userItem)} }
                       className="bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-600 transition-colors"
                     >
                       Modifier
                     </button> 
-                    < UpdateModal isOpen={openUpdate} onClose={close} onUserUpdated={open} user={user}/>
+                   
                   </div>
                 </td>
               </tr>

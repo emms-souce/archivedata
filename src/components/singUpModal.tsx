@@ -48,7 +48,7 @@ const SignupModal = () => {
           lastname: values.username, // Utilisation du champ username comme lastname
           role_uuid: values.role, // Utilisation de l'UUID du rôle directement
           avatar_uuid: "",
-          password: values.password
+          password:values.password
         };
 
         const response = await fetch(
@@ -124,7 +124,7 @@ const SignupModal = () => {
             </button>
 
             <form className="w-full max-w-sm mx-auto" onSubmit={formik.handleSubmit}>
-              <h2 className="text-2xl mb-6 text-center text-blue-600 font-bold">
+              <h2 className="text-2xl mb-6 text-center text-blue-400 font-bold">
                 Ajouter un Utilisateur
               </h2>
 

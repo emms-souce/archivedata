@@ -63,7 +63,8 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
         firstname: values.firstName,
         lastname: values.username,
         role_uuid: values.role,
-        uuid:user.uuid  // Placeholder pour avatar_uuid
+          uuid: user.uuid,
+        password:values.password  // Placeholder pour avatar_uuid
       };
 
       const url = `https://archive-doc-app.onrender.com/api/v1/users/`;
@@ -209,7 +210,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
             ) : null}
           </div>
 
-          {/* <div className="mb-4 relative">
+          <div className="mb-4 relative">
             <label
               className="block  text-left text-gray-700 text-sm font-bold mb-2"
               htmlFor="password"
@@ -239,7 +240,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
                 {formik.errors.password}
               </p>
             ) : null}
-          </div> */}
+          </div>
 
           <div className="mb-4">
             <label
