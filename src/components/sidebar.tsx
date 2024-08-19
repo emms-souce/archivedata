@@ -37,7 +37,7 @@ const Sidebar = () => {
     <div>
       {/* Bouton de toggle visible sur les petits écrans */}
       <button
-        className="md:hidden absolute left-0 p-2 bg-blue-600 py-4 text-white -mr-10"
+        className="md:hidden absolute left-0 p-2 bg-blue-300 py-4 text-white -mr-10"
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? (

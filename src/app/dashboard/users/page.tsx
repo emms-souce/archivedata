@@ -166,8 +166,8 @@ const Dashboard: React.FC = () => {
           </thead>
           <tbody>
             {currentUsers?.map((userItem) => (
+              
               <tr key={userItem.uuid} className="hover:bg-gray-100">
-                 < UpdateModal user={userItem} isOpen={openUpdate} onClose={close} onUserUpdated={open} />
                 <td className="py-4 px-6 border-b text-gray-800">
                   {`${userItem.firstname} ${userItem.lastname}`}
                 </td>
@@ -192,10 +192,13 @@ const Dashboard: React.FC = () => {
                       className="bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-600 transition-colors"
                     >
                       Modifier
+
                     </button> 
                    
                   </div>
                 </td>
+               < UpdateModal user={userItem} isOpen={openUpdate} onClose={close} onUserUpdated={open} />
+
               </tr>
             ))}
             {currentUsers.length === 0 && (
@@ -223,6 +226,7 @@ const Dashboard: React.FC = () => {
                 : "bg-blue-500 text-white hover:bg-blue-600"
             }`}
           >
+            
             Précédent
           </button>
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
