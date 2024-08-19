@@ -47,30 +47,40 @@ const Navbar: React.FC = () => {
             isMenuOpen ? "flex" : "hidden"
           } flex-col lg:flex-row lg:space-x-6 space-y-4 lg:space-y-0 lg:flex absolute lg:static top-16 left-0 w-full lg:w-auto bg-blue-500 lg:bg-transparent p-4 lg:p-0 z-20`}
         >
-          <li>
+          <li 
+            onClick={()=>{setIsMenuOpen(false)}}
+          >
+            
             <Link href="/user"  className="text-white font-semibold hover:text-gray-200">
               Accueil
             </Link>
           </li>
-          <li>
+          <li
+           onClick={()=>{setIsMenuOpen(false)}}
+          >
             <Link href="/about" className="text-white font-semibold hover:text-gray-200">
               À Propos
             </Link>
           </li>
-          <li>
+          <li
+            onClick={()=>{setIsMenuOpen(false)}}
+          >
             <Link href="/contact" className="text-white font-semibold hover:text-gray-200">
               Contact
             </Link>
           </li>
-          <li>
-          {login?  <Link
+          <li
+            onClick={()=>{setIsMenuOpen(false)}}
+          >
+            {login ? <Link
+              onClick={()=>{setIsMenuOpen(false)}}
               href="/login"
               className="inline-block bg-green-500 text-white font-semibold py-1 px-2 rounded-lg shadow-md hover:bg-green-600 transition-colors"
             >
               Se Connecter
             </Link> : <div
               className="inline-block cursor-pointer bg-red-400 text-white font-semibold py-1 px-2 rounded-lg shadow-md hover:bg-red-500 transition-colors"
-                onClick={()=>{handleLogout()}}
+                onClick={() => { handleLogout(); setIsMenuOpen(false)}}
             >
                 Se deconnecter
             </div>

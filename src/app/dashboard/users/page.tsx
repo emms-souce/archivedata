@@ -125,7 +125,7 @@ const Dashboard: React.FC = () => {
           placeholder="Rechercher..."
           value={searchQuery}
           onChange={handleSearch}
-          className="w-full p-3 border border-gray-300 rounded-lg shadow-md"
+          className="w-full p-3 border border-gray-300 rounded-lg focus:border-blue-500 shadow-md"
         />
       </div>
       <div className="overflow-x-auto">
