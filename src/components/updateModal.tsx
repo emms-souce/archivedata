@@ -33,7 +33,6 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
   onUserUpdated,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const roles = [
     {
@@ -210,7 +209,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
             ) : null}
           </div>
 
-          <div className="mb-4 relative">
+          {/* <div className="mb-4 relative">
             <label
               className="block  text-left text-gray-700 text-sm font-bold mb-2"
               htmlFor="password"
@@ -240,7 +239,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
                 {formik.errors.password}
               </p>
             ) : null}
-          </div>
+          </div> */}
 
           <div className="mb-4">
             <label

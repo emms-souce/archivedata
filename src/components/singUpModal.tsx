@@ -47,7 +47,8 @@ const SignupModal = () => {
           firstname: values.firstName,
           lastname: values.username, // Utilisation du champ username comme lastname
           role_uuid: values.role, // Utilisation de l'UUID du rôle directement
-          avatar_uuid: "", // Placeholder pour avatar_uuid
+          avatar_uuid: "",
+          password: values.password
         };
 
         const response = await fetch(
