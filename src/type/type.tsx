@@ -22,6 +22,13 @@ interface Avatar {
   medium: Medium;
 }
 
+interface Role {
+  uuid: string;
+  title_fr: string;
+  title_en: string;
+  code: string;
+    }
+
 interface User {
   uuid: string;
   email: string;
@@ -31,6 +38,7 @@ interface User {
   avatar: Avatar;
   date_added: string;
   date_modified: string;
+  role:Role;
 }
 
 interface Token {

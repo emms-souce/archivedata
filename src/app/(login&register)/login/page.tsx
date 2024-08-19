@@ -37,12 +37,19 @@ const Login = () => {
 
       const data: LoginResponse = await response.json();
       if (response.status !== 200) {
-        // toast.error(" l'adresse email ou le mot de passe est incorrect");
+        toast.error(" l'adresse email ou le mot de passe est incorrect");
       }
       // Stocker les données utilisateur et le token dans le localStorage
+      localStorage.setItem("role", data.user.role.title_fr);
       localStorage.setItem("user", JSON.stringify(data.user));
       localStorage.setItem("token", data.token.access_token);
-      router.push("/user");
+      
+      if (data.user.role.title_fr === "Administrateur") {
+        router.push("/dashboard");
+      }else {
+                router.push("/user");
+      }
+
       console.log("Login data stored successfully!");
     } catch (error) {
       console.error("Failed to fetch login data:", error);

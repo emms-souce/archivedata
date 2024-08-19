@@ -16,7 +16,7 @@ const Card: React.FC<CardProps> = ({
   onButtonClick,
 }) => {
   return (
-    <div className="max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-500 hover:scale-105 hover:shadow-2xl">
+    <div className="min-w-[300px] mx-auto bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-500 hover:scale-105 hover:shadow-2xl">
       <img
         className="w-full  object-cover"
         src={imageUrl}

@@ -1,10 +1,10 @@
 "use client";
 
 import SignupModal from "@/components/singUpModal";
+import UpdateModal from "@/components/updateModal";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-// Adapter l'interface User aux données de l'API
 interface Role {
   uuid: string;
   title_fr: string;
@@ -17,7 +17,7 @@ interface User {
   firstname: string;
   lastname: string;
   email: string;
-  role: Role; // Modifier le type de `role` pour refléter l'objet
+  role: Role;
   status: string;
   date_added: string;
   date_modified: string;
@@ -28,6 +28,8 @@ const Dashboard: React.FC = () => {
   const [c, setC] = useState(true);
   const [users, setUsers] = useState<User[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
 
   const deleteUser = async (userId: string) => {
     try {
@@ -63,7 +65,6 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Récupérer le token depuis le local storage
       const token = localStorage.getItem("token");
 
       if (!token) {
@@ -78,14 +79,13 @@ const Dashboard: React.FC = () => {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`, // Ajouter le token ici
+              Authorization: `Bearer ${token}`,
             },
           }
         );
 
         if (response.ok) {
           const data = await response.json();
-          // Mettre à jour les utilisateurs avec les données de l'API
           setUsers(data.data || []);
           setFilteredUsers(data.data || []);
         } else {
@@ -110,7 +110,25 @@ const Dashboard: React.FC = () => {
     );
 
     setFilteredUsers(filtered);
+    setCurrentPage(1); // Reset to first page when search query changes
   };
+
+  // Calculate users to display based on the current page
+  const indexOfLastUser = currentPage * itemsPerPage;
+  const indexOfFirstUser = indexOfLastUser - itemsPerPage;
+  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+
+  // Calculate total pages
+  const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
+
+  const [openUpdate, setOpenUpdate] = useState(false)
+  
+  const open = () => {
+    setOpenUpdate(!openUpdate)
+  }
+  const close = () => {
+    setOpenUpdate(!openUpdate)
+  }
 
   return (
     <div className="container mx-auto p-5">
@@ -147,7 +165,7 @@ const Dashboard: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredUsers?.map((user) => (
+            {currentUsers?.map((user) => (
               <tr key={user.uuid} className="hover:bg-gray-100">
                 <td className="py-4 px-6 border-b text-gray-800">
                   {`${user.firstname} ${user.lastname}`}
@@ -156,8 +174,7 @@ const Dashboard: React.FC = () => {
                   {user.email}
                 </td>
                 <td className="py-4 px-6 border-b text-gray-800">
-                  {user.role.title_fr}{" "}
-                  {/* Modifier ici pour afficher le titre du rôle */}
+                  {user.role.title_fr}
                 </td>
                 <td className="py-4 px-6 border-b text-center">
                   <div className="flex justify-center space-x-2">
@@ -169,17 +186,18 @@ const Dashboard: React.FC = () => {
                     >
                       Supprimer
                     </button>
-                    <button
-                      onClick={() => {}}
+                     <button
+                      onClick={open}
                       className="bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-600 transition-colors"
                     >
                       Modifier
-                    </button>
+                    </button> 
+                    < UpdateModal isOpen={openUpdate} onClose={close} onUserUpdated={open} user={user}/>
                   </div>
                 </td>
               </tr>
             ))}
-            {filteredUsers.length === 0 && (
+            {currentUsers.length === 0 && (
               <tr>
                 <td
                   colSpan={4}
@@ -192,6 +210,48 @@ const Dashboard: React.FC = () => {
           </tbody>
         </table>
       </div>
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-4 space-x-2">
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className={`py-2 px-4 rounded ${
+              currentPage === 1
+                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                : "bg-blue-500 text-white hover:bg-blue-600"
+            }`}
+          >
+            Précédent
+          </button>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={`py-2 px-4 rounded ${
+                currentPage === page
+                  ? "bg-blue-800 text-white"
+                  : "bg-blue-500 text-white hover:bg-blue-600"
+              }`}
+            >
+              {page}
+            </button>
+          ))}
+          <button
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
+            disabled={currentPage === totalPages}
+            className={`py-2 px-4 rounded ${
+              currentPage === totalPages
+                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                : "bg-blue-500 text-white hover:bg-blue-600"
+            }`}
+          >
+            Suivant
+          </button>
+        </div>
+      )}
     </div>
   );
 };

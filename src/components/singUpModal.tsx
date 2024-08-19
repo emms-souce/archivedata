@@ -114,7 +114,7 @@ const SignupModal = () => {
 
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-2 rounded-lg shadow-lg relative w-full max-w-lg">
+          <div className="bg-white p-2 rounded-lg shadow-lg relative w-full max-w-lg mx-5">
             <button
               onClick={() => setIsModalOpen(false)}
               className="absolute top-0 right-0 m-4 text-gray-700 hover:text-gray-900"
