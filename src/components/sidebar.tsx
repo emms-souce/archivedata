@@ -52,7 +52,7 @@ const Sidebar = () => {
       <div
         className={`${
           isOpen ? "flex !pb-12 " : "hidden"
-        } max-sm:fixed max-sm:top-10 md:flex z-[99] bg-gray-300 flex-col justify-between items-center h-screen px-4 py-5 min-w-[16rem] transition-all duration-300`}
+        } max-sm:fixed max-sm:top-12 md:flex z-[99] bg-gray-300 flex-col justify-between items-center h-screen px-4 py-5 min-w-[16rem] transition-all duration-300`}
       >
         <nav className="w-full flex flex-col items-center">
           <Image
