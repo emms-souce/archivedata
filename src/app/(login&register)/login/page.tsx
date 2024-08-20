@@ -85,7 +85,7 @@ const Login = () => {
       <div className="md:w-1/2 w-full flex flex-col justify-center items-center bg-blue-500 p-4">
         <div className="text-3xl font-bold text-white">BankDocs</div>
        {/* <Image src={"/docs.png"} alt="" width={600} height={600}/> */}
-       <Image src={"/Animation1.gif"} alt="" width={400} height={400}/>
+       <Image src={"/Animation1.gif"} width={200} height={200} alt=""  />
       </div>
       <div className="md:w-1/2 w-full flex justify-center items-center p-4">
         <form className="w-full max-w-sm" onSubmit={formik.handleSubmit}>
