@@ -1,5 +1,6 @@
 "use client";
 
+import Head from 'next/head';
 import { redirect, useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 
@@ -17,9 +18,14 @@ const page = () => {
     
     
     return (
-        <div className='w-screen min-h-screen flex justify-center items-center'>
+        <> <Head>
+        <title>Nouveau Nom de l'Application</title>
+      </Head>
+             <div className='w-screen min-h-screen flex justify-center items-center'>
             <div className=' text-lg  zoom-animation mx-auto md:text-2xl lg:text-5xl font-bold text-blue-500'> Se documenter c'est la base </div>
         </div>
+        </>
+       
     );
 };
 

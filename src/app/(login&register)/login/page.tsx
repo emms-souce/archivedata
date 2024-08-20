@@ -2,6 +2,7 @@
 
 import { LoginResponse } from "@/type/type";
 import { useFormik } from "formik";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -81,26 +82,10 @@ const Login = () => {
 
   return (
     <div className="flex flex-col md:flex-row h-screen">
-      <div className="md:w-1/2 w-full flex justify-center items-center bg-blue-500 p-4">
-        <svg
-          className="animate-spin h-32 w-32 text-white"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <circle
-            className="opacity-25"
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            strokeWidth="4"
-          ></circle>
-          <path
-            className="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8v8H4z"
-          ></path>
-        </svg>
+      <div className="md:w-1/2 w-full flex flex-col justify-center items-center bg-blue-500 p-4">
+        <div className="text-3xl font-bold text-white">BankDocs</div>
+       {/* <Image src={"/docs.png"} alt="" width={600} height={600}/> */}
+       <Image src={"/Animation1.gif"} alt="" width={400} height={400}/>
       </div>
       <div className="md:w-1/2 w-full flex justify-center items-center p-4">
         <form className="w-full max-w-sm" onSubmit={formik.handleSubmit}>

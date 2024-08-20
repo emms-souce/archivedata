@@ -2,18 +2,25 @@
 
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 
-interface Document {
-  id: string;
-  title: string;
-  description: string;
-  date: string;
+interface FileItem {
+  uuid: string;
+  public_id: string;
+  file_name: string;
+  summary: string | null;
+  width: number;
+  height: number;
+  size: number;
+  cloudinary_file_name: string;
+  url: string;
+  format: string | null;
 }
 
 const DocumentDetail: React.FC = () => {
   const router = useRouter();
   const { id } = useParams();
-  const [document, setDocument] = useState<Document | null>(null);
+  const [document, setDocument] = useState<FileItem | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [summaryVisible, setSummaryVisible] = useState<boolean>(false);
   const [loadingSummary, setLoadingSummary] = useState<boolean>(false);
@@ -36,13 +43,8 @@ const DocumentDetail: React.FC = () => {
           throw new Error(`Error fetching document: ${response.statusText}`);
         }
 
-        const data = await response.json();
-        setDocument({
-          id: data.uuid,
-          title: data.file_name,
-          description: data.summary || "No description available",
-          date: data.date_added,
-        });
+        const data: FileItem = await response.json();
+        setDocument(data);
       } catch (error) {
         console.error("Failed to fetch document:", error);
       } finally {
@@ -81,31 +83,56 @@ const DocumentDetail: React.FC = () => {
 
   return (
     <div className="container mx-auto flex flex-col items-center p-5">
-      <h1 className="text-3xl font-bold mb-4">{document.title}</h1>
+      <h1 className="text-3xl font-bold mb-4">{document.file_name}</h1>
+      <img
+        src={document.url}
+        alt={document.file_name}
+        className="max-w-full h-auto mb-4"
+        width={document.width}
+        height={document.height}
+      />
       <div className="mt-4">
         <button
           onClick={toggleSummary}
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors"
         >
-          {summaryVisible ? "Masquer le résumé" : "Afficher le résumé"}
+          {summaryVisible ? "Masquer le résumé" : "Génerer le résumé"}
         </button>
       </div>
       {loadingSummary ? (
-        <div className="text-gray-500 mt-4">Chargement du résumé...</div>
+        <div className="text-gray-500 flex mt-4">  Génération du résumé...</div>
       ) : (
         summaryVisible && (
-          <p className="text-gray-700 mt-4">{document.description}</p>
+          <p className="text-gray-700 mt-4">
+            {document.summary || "Aucun résumé disponible"}
+          </p>
         )
       )}
-      <p className="text-gray-500 mt-4">Date: {document.date}</p>
-      <div className="mt-6">
-        <button
-          onClick={() => router.push("/user")}
-          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors"
+      {/* <p className="text-gray-500 mt-4">Date ajoutée: {document.date_added}</p> */}
+      <p className="text-gray-500 mt-2">Taille: {document.size} bytes</p>
+      <p className="text-gray-500 mt-2">
+        Format: {document.format || "Inconnu"}
+      </p>
+      <div className="mt-6 flex flex-col space-y-4">
+          <a
+          href={document.url}
+          download={document.file_name}
+          className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700 transition-colors"
         >
-          Retour à la liste des documents
-        </button>
+          Consulter le Document 
+        </a>
       </div>
+      <div
+        onClick={() => router.push("/user")}
+        className="w-full mt-20 items-center flex cursor-pointer">
+          <FaArrowCircleLeft className=" text-blue-500 mr-2"/>
+        <button
+          className=" text-blue-600  rounded hover:text-blue-700 hover:underline transition-colors"
+        >
+        Retour à la liste des documents
+        </button>
+        </div>
+       
     </div>
   );
 };
