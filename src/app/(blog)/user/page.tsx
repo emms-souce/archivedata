@@ -62,12 +62,15 @@ const HomePage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [documents, setDocuments] = useState<fileItem[]>([]);
   const [filteredDocuments, setFilteredDocuments] = useState<fileItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadDocuments = async () => {
+      setLoading(true);
       const apiDocuments = await fetchFileItems();
       setDocuments(apiDocuments);
       setFilteredDocuments(apiDocuments); // Initially, all documents are shown
+      setLoading(false);
     };
 
     loadDocuments();
@@ -101,57 +104,66 @@ const HomePage: React.FC = () => {
 
       <div className="container mx-auto px-4">
         <SearchBar onSearch={handleSearch} />
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {selectedDocuments.map((doc) => (
-            <PdfCard
-              id={doc.uuid}
-              key={doc.uuid}
-              title={doc.file_name}
-              description={doc.summary || "No description available"}
-              downloadLink={doc.url}
-              fileSize={`${(doc.size / 1024).toFixed(2)} Kb`}
-            />
-          ))}
-        </div>
+
+        {loading ? (
+          <div className="text-center text-gray-500 mt-6">
+            Chargement des documents...
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {selectedDocuments.map((doc) => (
+              <PdfCard
+                id={doc.uuid}
+                key={doc.uuid}
+                title={doc.file_name}
+                description={doc.summary || "No description available"}
+                downloadLink={doc.url}
+                fileSize={`${(doc.size / 1024).toFixed(2)} Kb`}
+              />
+            ))}
+          </div>
+        )}
 
         {/* Pagination */}
-        <div className="flex justify-end mt-6">
-          <button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className={`px-3 py-1 border rounded-lg ${
-              currentPage === 1
-                ? "text-gray-400 cursor-not-allowed"
-                : "text-blue-500 hover:bg-blue-100"
-            }`}
-          >
-            Précédent
-          </button>
-          {[...Array(totalPages)].map((_, i) => (
+        {!loading && (
+          <div className="flex justify-end mt-6">
             <button
-              key={i}
-              onClick={() => handlePageChange(i + 1)}
-              className={`px-3 py-1 border rounded-lg mx-1 ${
-                currentPage === i + 1
-                  ? "bg-blue-500 text-white"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className={`px-3 py-1 border rounded-lg ${
+                currentPage === 1
+                  ? "text-gray-400 cursor-not-allowed"
                   : "text-blue-500 hover:bg-blue-100"
               }`}
             >
-              {i + 1}
+              Précédent
             </button>
-          ))}
-          <button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className={`px-3 py-1 border rounded-lg ${
-              currentPage === totalPages
-                ? "text-gray-400 cursor-not-allowed"
-                : "text-blue-500 hover:bg-blue-100"
-            }`}
-          >
-            Suivant
-          </button>
-        </div>
+            {[...Array(totalPages)].map((_, i) => (
+              <button
+                key={i}
+                onClick={() => handlePageChange(i + 1)}
+                className={`px-3 py-1 border rounded-lg mx-1 ${
+                  currentPage === i + 1
+                    ? "bg-blue-500 text-white"
+                    : "text-blue-500 hover:bg-blue-100"
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className={`px-3 py-1 border rounded-lg ${
+                currentPage === totalPages
+                  ? "text-gray-400 cursor-not-allowed"
+                  : "text-blue-500 hover:bg-blue-100"
+              }`}
+            >
+              Suivant
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

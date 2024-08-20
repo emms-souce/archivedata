@@ -10,7 +10,8 @@ const Page = () => {
         Ajouter un Nouveau document
       </div>
       <div className="text-lg text-center text-blue-500 font-semibold ">
-        NB: Le resumer seront générés automatiquement via une IA
+        Cette espace vous permet d'ajouter un document <br />
+        l'ajout se fera automatiquement 
       </div>
       <div className="mt-5 flex justify-center ">
         <DragAndDrop />
