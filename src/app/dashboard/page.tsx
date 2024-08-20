@@ -16,7 +16,7 @@ const Dashboard = () => {
           }}
           buttonText="test buttom"
           imageUrl="/user.png"
-          description="list des User"
+          description="Liste des User"
           title="Utilisateur"
         />
         <Card
@@ -25,7 +25,7 @@ const Dashboard = () => {
           }}
           buttonText="test buttom"
           imageUrl="/docs.png"
-          description="list des document"
+          description="Liste des document"
           title="Document"
         />
         <Card

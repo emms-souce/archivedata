@@ -3,7 +3,6 @@
 import SearchBar from "./component/searchBar";
 import PdfCard from "@/components/cardItem";
 import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 
 type fileItem = {
   uuid: string;
@@ -18,138 +17,15 @@ type fileItem = {
   format: string | null;
 };
 
-const pdfDocuments = [
-  {
-    title: "Sample PDF 1",
-    description: "Description for sample PDF 1.",
-    downloadLink: "/path/to/sample1.pdf",
-    fileSize: "1.2 MB",
-  },
-  {
-    title: "Sample PDF 1",
-    description: "Description for sample PDF 1.",
-    downloadLink: "/path/to/sample1.pdf",
-    fileSize: "1.2 MB",
-  },
-  {
-    title: "Sample PDF 1",
-    description: "Description for sample PDF 1.",
-    downloadLink: "/path/to/sample1.pdf",
-    fileSize: "1.2 MB",
-  },
-  {
-    title: "Sample PDF 1",
-    description: "Description for sample PDF 1.",
-    downloadLink: "/path/to/sample1.pdf",
-    fileSize: "1.2 MB",
-  },
-  {
-    title: "Sample PDF 1",
-    description: "Description for sample PDF 1.",
-    downloadLink: "/path/to/sample1.pdf",
-    fileSize: "1.2 MB",
-  },
-  {
-    title: "Sample PDF 1",
-    description: "Description for sample PDF 1.",
-    downloadLink: "/path/to/sample1.pdf",
-    fileSize: "1.2 MB",
-  },
-  {
-    title: "Sample PDF 1",
-    description: "Description for sample PDF 1.",
-    downloadLink: "/path/to/sample1.pdf",
-    fileSize: "1.2 MB",
-  },
-  {
-    title: "Sample PDF 1",
-    description: "Description for sample PDF 1.",
-    downloadLink: "/path/to/sample1.pdf",
-    fileSize: "1.2 MB",
-  },
-  {
-    title: "Sample PDF 1",
-    description: "Description for sample PDF 1.",
-    downloadLink: "/path/to/sample1.pdf",
-    fileSize: "1.2 MB",
-  },
-  {
-    title: "Sample PDF 1",
-    description: "Description for sample PDF 1.",
-    downloadLink: "/path/to/sample1.pdf",
-    fileSize: "1.2 MB",
-  },
-  {
-    title: "Sample PDF 1",
-    description: "Description for sample PDF 1.",
-    downloadLink: "/path/to/sample1.pdf",
-    fileSize: "1.2 MB",
-  },
-  {
-    title: "Sample PDF 1",
-    description: "Description for sample PDF 1.",
-    downloadLink: "/path/to/sample1.pdf",
-    fileSize: "1.2 MB",
-  },
-  {
-    title: "Sample PDF 1",
-    description: "Description for sample PDF 1.",
-    downloadLink: "/path/to/sample1.pdf",
-    fileSize: "1.2 MB",
-  },
-  {
-    title: "Sample PDF 1",
-    description: "Description for sample PDF 1.",
-    downloadLink: "/path/to/sample1.pdf",
-    fileSize: "1.2 MB",
-  },
-  {
-    title: "Sample PDF 1",
-    description: "Description for sample PDF 1.",
-    downloadLink: "/path/to/sample1.pdf",
-    fileSize: "1.2 MB",
-  },
-  {
-    title: "Sample PDF 1",
-    description: "Description for sample PDF 1.",
-    downloadLink: "/path/to/sample1.pdf",
-    fileSize: "1.2 MB",
-  },
-  {
-    title: "Sample PDF 1",
-    description: "Description for sample PDF 1.",
-    downloadLink: "/path/to/sample1.pdf",
-    fileSize: "1.2 MB",
-  },
-  {
-    title: "Sample PDF 1",
-    description: "Description for sample PDF 1.",
-    downloadLink: "/path/to/sample1.pdf",
-    fileSize: "1.2 MB",
-  },
-  {
-    title: "Sample PDF 1",
-    description: "Description for sample PDF 1.",
-    downloadLink: "/path/to/sample1.pdf",
-    fileSize: "1.2 MB",
-  },
-  {
-    title: "Sample PDF 1",
-    description: "Description for sample PDF 1.",
-    downloadLink: "/path/to/sample1.pdf",
-    fileSize: "1.2 MB",
-  },
-];
-
 async function fetchFileItems(): Promise<fileItem[]> {
   try {
     const response = await fetch(
-      "https://archive-doc-app.onrender.com/api/v1/storages/documents?page=1&per_page=100",
+      "https://archive-doc-app.onrender.com/api/v1/storages/documents?page=1&per_page=30&order=desc&order_filed=date_added",
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // Assuming you have a token stored
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // If a token is required
         },
       }
     );
@@ -180,19 +56,26 @@ async function fetchFileItems(): Promise<fileItem[]> {
   }
 }
 
-const doctData = fetchFileItems();
-
-console.log(doctData);
-
-const ITEMS_PER_PAGE = 12;
+const ITEMS_PER_PAGE = 12; // Pagination set to 12 items per page
 
 const HomePage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [filteredDocuments, setFilteredDocuments] = useState(pdfDocuments);
+  const [documents, setDocuments] = useState<fileItem[]>([]);
+  const [filteredDocuments, setFilteredDocuments] = useState<fileItem[]>([]);
+
+  useEffect(() => {
+    const loadDocuments = async () => {
+      const apiDocuments = await fetchFileItems();
+      setDocuments(apiDocuments);
+      setFilteredDocuments(apiDocuments); // Initially, all documents are shown
+    };
+
+    loadDocuments();
+  }, []);
 
   const handleSearch = (query: string) => {
-    const filtered = pdfDocuments.filter((doc) =>
-      doc.title.toLowerCase().includes(query.toLowerCase())
+    const filtered = documents.filter((doc) =>
+      doc.file_name.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredDocuments(filtered);
     setCurrentPage(1); // Reset to first page on new search
@@ -219,14 +102,14 @@ const HomePage: React.FC = () => {
       <div className="container mx-auto px-4">
         <SearchBar onSearch={handleSearch} />
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {selectedDocuments.map((doc, index) => (
+          {selectedDocuments.map((doc) => (
             <PdfCard
-              id={index.toString()}
-              key={index}
-              title={doc.title}
-              description={doc.description}
-              downloadLink={doc.downloadLink}
-              fileSize={doc.fileSize}
+              id={doc.uuid}
+              key={doc.uuid}
+              title={doc.file_name}
+              description={doc.summary || "No description available"}
+              downloadLink={doc.url}
+              fileSize={`${(doc.size / 1024).toFixed(2)} Kb`}
             />
           ))}
         </div>
