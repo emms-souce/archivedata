@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   FaBars,
   FaTimes,
@@ -13,8 +13,6 @@ import {
   FaUsers,
   FaUserCircle,
 } from "react-icons/fa";
-
-// Importing icons
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,28 +29,31 @@ const Sidebar = () => {
     { name: "Utilisateurs", href: "/dashboard/users", icon: <FaUsers /> },
   ];
 
-  const isActive = (href: string) => "dashboard" === href;
+  const isActive = (href: string) => false
 
   return (
-    <div>
-      {/* Bouton de toggle visible sur les petits écrans */}
+    <div className="relative">
+      {/* Overlay when the sidebar is open on mobile */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black opacity-50 z-40"
+          onClick={() => setIsOpen(false)}
+        ></div>
+      )}
+
+      {/* Toggle button for small screens */}
       <button
-        className="md:hidden absolute left-0 p-2 bg-blue-300 py-4 text-white -mr-10"
+        className="md:hidden fixed top-2 left-2 z-[30] p-2 bg-blue-300 text-white rounded-full shadow-lg"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {isOpen ? (
-          <FaTimes className="z-5" size={20} />
-        ) : (
-          <FaBars className="z-5" size={20} />
-        )}{" "}
-        {/* Icons for toggling */}
+        {isOpen ? <FaTimes size={24} /> : <FaBars size={24}  />}
       </button>
 
       {/* Sidebar */}
       <div
         className={`${
-          isOpen ? "flex !pb-12 " : "hidden"
-        } max-sm:fixed max-sm:top-12 md:flex z-[99] bg-blue-200 flex-col justify-between items-center h-screen px-4 py-5 min-w-[16rem] transition-all duration-300`}
+          isOpen ? "translate-x-0 py-20" : "-translate-x-full h-screen"
+        } md:translate-x-0 fixed top-0 left-0 h-full w-64 bg-blue-200 flex flex-col justify-between items-center p-3 z-50 transform transition-transform duration-300 ease-in-out shadow-lg md:relative md:shadow-none`}
       >
         <nav className="w-full flex flex-col items-center">
           <Image
@@ -67,7 +68,7 @@ const Sidebar = () => {
             <Link href={item.href} key={item.name} className="w-full">
               <div
                 onClick={() => setIsOpen(false)}
-                className={`mt-2 py-2 px-2 w-full flex items-center  rounded-lg text-lg font-semibold transition-colors ${
+                className={`mt-2 py-2 px-2 w-full flex items-center rounded-lg text-lg font-semibold transition-colors ${
                   isActive(item.href)
                     ? "bg-blue-800 text-white"
                     : "bg-blue-600 text-white hover:bg-blue-800"
@@ -85,7 +86,7 @@ const Sidebar = () => {
           className="w-full"
           onClick={() => setIsOpen(false)}
         >
-          <div className="mt-2 py-2 px-2 w-full flex items-center  rounded-lg text-lg font-semibold bg-blue-600 text-white hover:bg-blue-800 transition-colors">
+          <div className="mt-2 py-2 px-2 w-full flex items-center rounded-lg text-lg font-semibold bg-blue-600 text-white hover:bg-blue-800 transition-colors">
             <FaUserCircle className="mr-2" />
             <span>Mon profile</span>
           </div>

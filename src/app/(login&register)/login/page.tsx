@@ -9,16 +9,18 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
-
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false); // Loading state
 
   const router = useRouter();
+
   async function fetchLoginData(
     url: string,
     username: string,
     password: string
   ): Promise<void> {
+    setLoading(true); // Start loading
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -32,7 +34,7 @@ const Login = () => {
       });
 
       if (!response.ok) {
-         toast.error(" l'adresse email ou le mot de passe est incorrect");
+        toast.error(" l'adresse email ou le mot de passe est incorrect");
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
@@ -40,20 +42,22 @@ const Login = () => {
       if (response.status !== 200) {
         toast.error(" l'adresse email ou le mot de passe est incorrect");
       }
-      // Stocker les données utilisateur et le token dans le localStorage
+
       localStorage.setItem("role", data.user.role.title_fr);
       localStorage.setItem("user", JSON.stringify(data.user));
       localStorage.setItem("token", data.token.access_token);
-      
+
       if (data.user.role.title_fr === "Administrateur") {
         router.push("/dashboard");
-      }else {
-                router.push("/user");
+      } else {
+        router.push("/user");
       }
 
       console.log("Login data stored successfully!");
     } catch (error) {
       console.error("Failed to fetch login data:", error);
+    } finally {
+      setLoading(false); // Stop loading
     }
   }
 
@@ -71,7 +75,6 @@ const Login = () => {
     onSubmit: async (values) => {
       console.log("Form data", values);
 
-      // Appel de la fonction fetchLoginData lors de la soumission du formulaire
       await fetchLoginData(
         "https://archive-doc-app.onrender.com/api/v1/auths/login/administrator",
         values.email,
@@ -84,8 +87,7 @@ const Login = () => {
     <div className="flex flex-col md:flex-row h-screen">
       <div className="md:w-1/2 w-full flex flex-col justify-center items-center bg-blue-500 p-4">
         <div className="text-3xl font-bold text-white">BankDocs</div>
-       {/* <Image src={"/docs.png"} alt="" width={600} height={600}/> */}
-       <Image src={"/Animation1.gif"} width={200} height={200} alt=""  />
+        <Image src={"/Animation.gif"} width={200} height={200} alt="" />
       </div>
       <div className="md:w-1/2 w-full flex justify-center items-center p-4">
         <form className="w-full max-w-sm" onSubmit={formik.handleSubmit}>
@@ -149,11 +151,15 @@ const Login = () => {
           </div>
           <div className="flex items-center justify-between">
             <button
-              // onClick={()=>{ toast.error(" l'adresse email ou le mot de passe est incorrect");}}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center justify-center"
               type="submit"
+              disabled={loading}
             >
-              Se connecter
+              {loading ? (
+               <div className="flex"> <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-white mr-2"></div>connexion...</div>
+              ) : (
+                "Se connecter"
+              )}
             </button>
             <Link className="text-blue-400 hover:underline" href={"/"}>
               Acceuil

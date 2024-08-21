@@ -62,13 +62,13 @@ const DocumentDetail: React.FC = () => {
     setTimeout(() => {
       setSummaryVisible(!summaryVisible);
       setLoadingSummary(false);
-    }, 500); // Simulate loading time
+    }, 3000); // Simulate loading time
   };
 
   if (loading) {
     return (
       <div className="container mx-auto p-5 text-center">
-        <h2 className="text-2xl font-bold">Chargement du document...</h2>
+        <h2 className="text-2xl font-bold"> Chargement du document...</h2>
       </div>
     );
   }
@@ -83,14 +83,17 @@ const DocumentDetail: React.FC = () => {
 
   return (
     <div className="container mx-auto flex flex-col items-center p-5">
+      <div className="w-full text-gray-600 mt-5 font-bold py-4 text-2xl text-center">
+       Details du  document
+      </div>{" "}
       <h1 className="text-3xl font-bold mb-4">{document.file_name}</h1>
-      <img
+      {/* <img
         src={document.url}
         alt={document.file_name}
         className="max-w-full h-auto mb-4"
         width={document.width}
         height={document.height}
-      />
+      /> */}
       <div className="mt-4">
         <button
           onClick={toggleSummary}
@@ -100,7 +103,10 @@ const DocumentDetail: React.FC = () => {
         </button>
       </div>
       {loadingSummary ? (
-        <div className="text-gray-500 flex mt-4">  Génération du résumé...</div>
+        <div className="text-gray-500 flex mt-4 items-center">
+          <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-blue-500 mr-4"></div>{" "}
+          Génération du résumé...
+        </div>
       ) : (
         summaryVisible && (
           <p className="text-gray-700 mt-4">
@@ -109,30 +115,28 @@ const DocumentDetail: React.FC = () => {
         )
       )}
       {/* <p className="text-gray-500 mt-4">Date ajoutée: {document.date_added}</p> */}
-      <p className="text-gray-500 mt-2">Taille: {document.size} bytes</p>
+      <p className="text-gray-500 mt-10">Taille: <span className="font-bold"> {document.size} Kb</span> </p>
       <p className="text-gray-500 mt-2">
-        Format: {document.format || "Inconnu"}
+        Format: <span className="font-bold">{document.format || "Inconnu"}</span>
       </p>
-      <div className="mt-6 flex flex-col space-y-4">
-          <a
+      <div className="mt- flex flex-col space-y-4">
+        <a
           href={document.url}
           download={document.file_name}
           className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700 transition-colors"
         >
-          Consulter le Document 
+          Consulter le Document
         </a>
       </div>
       <div
         onClick={() => router.push("/user")}
-        className="w-full mt-20 items-center flex cursor-pointer">
-          <FaArrowCircleLeft className=" text-blue-500 mr-2"/>
-        <button
-          className=" text-blue-600  rounded hover:text-blue-700 hover:underline transition-colors"
-        >
-        Retour à la liste des documents
+        className="w-full mt-20 items-center flex cursor-pointer"
+      >
+        <FaArrowCircleLeft className=" text-blue-500 mr-2" />
+        <button className=" text-blue-600  rounded hover:text-blue-700 hover:underline transition-colors">
+          Retour à la liste des documents
         </button>
-        </div>
-       
+      </div>
     </div>
   );
 };

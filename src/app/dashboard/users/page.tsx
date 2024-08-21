@@ -174,7 +174,7 @@ const Dashboard: React.FC = () => {
                 </tr>
               </thead>
           <tbody>{isLoading ? ( // Affichage du message de chargement
-            <div className="text-center text-gray-500 text-xl">
+            <div className="w-[300px] text-gray-500 md:text-xl">
               Chargement des données...
             </div>
           ) : <>   {currentUsers?.map((userItem) => (

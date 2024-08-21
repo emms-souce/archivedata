@@ -14,7 +14,8 @@ type fileItem = {
   size: number;
   cloudinary_file_name: string;
   url: string;
-  format: string | null;
+  format: string;
+  date_added: string;
 };
 
 async function fetchFileItems(): Promise<fileItem[]> {
@@ -47,6 +48,7 @@ async function fetchFileItems(): Promise<fileItem[]> {
       cloudinary_file_name: item.cloudinary_file_name,
       url: item.url,
       format: item.format,
+      date_added: item.date_added,
     }));
 
     return fileItems;
@@ -56,7 +58,7 @@ async function fetchFileItems(): Promise<fileItem[]> {
   }
 }
 
-const ITEMS_PER_PAGE = 12; // Pagination set to 12 items per page
+const ITEMS_PER_PAGE = 12;
 
 const HomePage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -64,11 +66,15 @@ const HomePage: React.FC = () => {
   const [filteredDocuments, setFilteredDocuments] = useState<fileItem[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Constant to store all the documents
+  const [allDocuments, setAllDocuments] = useState<fileItem[]>([]);
+
   useEffect(() => {
     const loadDocuments = async () => {
       setLoading(true);
       const apiDocuments = await fetchFileItems();
       setDocuments(apiDocuments);
+      setAllDocuments(apiDocuments); // Store all documents in a constant
       setFilteredDocuments(apiDocuments); // Initially, all documents are shown
       setLoading(false);
     };
@@ -77,11 +83,26 @@ const HomePage: React.FC = () => {
   }, []);
 
   const handleSearch = (query: string) => {
-    const filtered = documents.filter((doc) =>
+    const filtered = allDocuments.filter((doc) =>
       doc.file_name.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredDocuments(filtered);
-    setCurrentPage(1); // Reset to first page on new search
+    setCurrentPage(1);
+  };
+
+  const handleFilter = (type: string, date: string) => {
+    let filtered = allDocuments;
+
+    if (type) {
+      filtered = filtered.filter((doc) => doc.format === type);
+    }
+
+    if (date) {
+      filtered = filtered.filter((doc) => doc.date_added.startsWith(date));
+    }
+
+    setFilteredDocuments(filtered);
+    setCurrentPage(1);
   };
 
   const handlePageChange = (newPage: number) => {
@@ -105,6 +126,32 @@ const HomePage: React.FC = () => {
       <div className="container mx-auto px-4">
         <SearchBar onSearch={handleSearch} />
 
+        {/* Filters */}
+        <div className="flex justify-between mb-4">
+          <div>
+            <div className="font-bold">Filtrer par type</div>
+            <select
+              onChange={(e) => handleFilter(e.target.value, "")}
+              className="p-2 border border-gray-300 rounded-lg"
+            >
+              <option value="">Tous les types</option>
+              <option value="pdf">PDF</option>
+              <option value="docx">DOCX</option>
+              <option value="jpg">JPG</option>
+              {/* Add more options based on your file types */}
+            </select>
+          </div>
+
+          <div>
+            <div className="font-bold"> Filtrer par date d'ajout</div>
+            <input
+              type="date"
+              onChange={(e) => handleFilter("", e.target.value)}
+              className="p-2 border border-gray-300 rounded-lg"
+            />
+          </div>
+        </div>
+
         {loading ? (
           <div className="text-center text-gray-500 mt-6">
             Chargement des documents...
@@ -117,8 +164,8 @@ const HomePage: React.FC = () => {
                 key={doc.uuid}
                 title={doc.file_name}
                 description={doc.summary || "No description available"}
-                downloadLink={doc.url}
                 fileSize={`${(doc.size / 1024).toFixed(2)} Kb`}
+                format={doc.format}
               />
             ))}
           </div>

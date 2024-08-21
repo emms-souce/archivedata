@@ -24,7 +24,7 @@ const router = useRouter();
           <Sidebar/>
           <div className="w-full">
             <Navbar/>
-              <div> {children}</div>
+              <div className="mt-14"> {children}</div>
           </div>
          </div>
 

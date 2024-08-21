@@ -10,16 +10,16 @@ const Dashboard = () => {
   return (
     <div className=" container mx-auto p-5 ">
       <div className="grid  grid-cols-1 md:grid-cols-2 items-center lg:grid-cols-3 gap-4">
-        <Card
+         <Card
           onButtonClick={() => {
-            router.push("/dashboard/users");
+            router.push(" /dashboard/add-document");
           }}
           buttonText="test buttom"
-          imageUrl="/user.png"
-          description="Liste des User"
-          title="Utilisateur"
+          imageUrl="/upload.png"
+          description="Ajouter un document "
+          title="Uploader"
         />
-        <Card
+         <Card
           onButtonClick={() => {
             router.push("/dashboard/documents");
           }}
@@ -30,13 +30,15 @@ const Dashboard = () => {
         />
         <Card
           onButtonClick={() => {
-            router.push(" /dashboard/add-document");
+            router.push("/dashboard/users");
           }}
           buttonText="test buttom"
-          imageUrl="/upload.png"
-          description="Ajouter un document "
-          title="Uploader"
+          imageUrl="/user.png"
+          description="Liste des User"
+          title="Utilisateur"
         />
+       
+       
       </div>
     </div>
   );

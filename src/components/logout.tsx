@@ -29,11 +29,11 @@ const LogoutModal: React.FC = () => {
 
       {isModalOpen && (
         <div
-          className="fixed inset-0 flex  justify-end p-10 bg-black bg-opacity-50 z-50"
+          className="fixed inset-0 flex  justify-end p-10 bg-black bg-opacity-50 z-[99]"
           onClick={() => setIsModalOpen(false)}
         >
           <div
-            className="bg-white p-6 rounded-lg shadow-lg relative w-80 h-20"
+            className="bg-white p-6 rounded-lg shadow-lg relative w-72 h-20"
             onClick={(e) => e.stopPropagation()} // Empêche la fermeture en cliquant sur la modal
           >
             <button
