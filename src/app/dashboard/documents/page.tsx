@@ -1,5 +1,6 @@
 "use client";
 
+import { API_BASE_URL } from "@/components/config/apiRoutes";
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
@@ -23,12 +24,14 @@ const DocumentsPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
+    const apiroute = API_BASE_URL;
+
 
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
         const response = await fetch(
-          "https://archive-doc-app.onrender.com/api/v1/storages/documents?page=1&per_page=100"
+          `${apiroute}/storages/documents?page=1&per_page=100`
         );
         if (response.ok) {
           const data = await response.json();
@@ -66,7 +69,7 @@ const DocumentsPage: React.FC = () => {
      const token = localStorage.getItem("token");
     try {
       const response = await fetch(
-        `https://archive-doc-app.onrender.com/api/v1/storages?file_public_id=${public_id}`,
+        `${apiroute}/storages?file_public_id=${public_id}`,
         {
           method: "DELETE",
           headers: {

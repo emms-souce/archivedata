@@ -1,5 +1,6 @@
 "use client";
 
+import { API_BASE_URL } from "@/components/config/apiRoutes";
 import { LoginResponse } from "@/type/type";
 import { useFormik } from "formik";
 import Image from "next/image";
@@ -8,6 +9,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
+
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -61,6 +63,8 @@ const Login = () => {
     }
   }
 
+    const apiroute = API_BASE_URL;
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -76,7 +80,7 @@ const Login = () => {
       console.log("Form data", values);
 
       await fetchLoginData(
-        "https://archive-doc-app.onrender.com/api/v1/auths/login/administrator",
+        `${apiroute}/auths/login/administrator`,
         values.email,
         values.password
       );

@@ -4,14 +4,22 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-interface User {
-  name: string;
+
+type User = {
+  avatar: string | null;
+  date_added: string;
+  date_modified: string;
   email: string;
+  firstname: string;
+  is_new_user: boolean;
+  lastname: string;
   role: {
+    uuid: string;
     title_fr: string;
+    title_en: string;
   };
-  createdAt: string;
-}
+  uuid: string;
+};
 
 const Profile: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -38,11 +46,11 @@ const Profile: React.FC = () => {
         </h2>
         <div className="mb-4">
           <p className="text-gray-700 font-semibold">Nom :</p>
-          <p className="text-gray-900">{user.name}</p>
+          <p className="text-gray-900 font-semibold">{user.firstname}{ user.lastname}</p>
         </div>
         <div className="mb-4">
           <p className="text-gray-700 font-semibold">Email :</p>
-          <p className="text-gray-900">{user.email}</p>
+          <p className="text-gray-900 font-semibold">{user.email}</p>
         </div>
         <div className="mb-4">
           <p className="text-gray-700 font-semibold">Rôle :</p>

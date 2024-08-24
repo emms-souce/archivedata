@@ -4,6 +4,7 @@ import Navbar from "@/components/navbar";
 import Sidebar from "@/components/sidebar";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { ToastContainer } from "react-toastify";
 
 
 export default function RootLayout({
@@ -20,7 +21,8 @@ const router = useRouter();
        }
      }, []);
   return (
-         <div className="flex w-full bg-white shadow-lg max-w-[1800px] mx-auto">
+    <div className="flex w-full bg-white shadow-lg max-w-[1800px] mx-auto">
+      <ToastContainer/>
           <Sidebar/>
           <div className="w-full">
             <Navbar/>

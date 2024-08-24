@@ -1,8 +1,10 @@
 "use client";
 
+import { API_BASE_URL } from "@/components/config/apiRoutes";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
+
 
 interface FileItem {
   uuid: string;
@@ -25,19 +27,18 @@ const DocumentDetail: React.FC = () => {
   const [summaryVisible, setSummaryVisible] = useState<boolean>(false);
   const [loadingSummary, setLoadingSummary] = useState<boolean>(false);
 
+  const apiroute = API_BASE_URL;
+
   useEffect(() => {
     const fetchDocument = async () => {
       try {
-        const response = await fetch(
-          `https://archive-doc-app.onrender.com/api/v1/storages/get/${id}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`, // Assuming you have a token stored
-            },
-          }
-        );
+        const response = await fetch(`${apiroute}/storages/get/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`, // Assuming you have a token stored
+          },
+        });
 
         if (!response.ok) {
           throw new Error(`Error fetching document: ${response.statusText}`);

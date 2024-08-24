@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "./config/apiRoutes";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
@@ -48,6 +49,8 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
       uuid: "5f6771b1-87f9-4fb8-9bfd-8edc7d3672db",
     },
   ];
+    const apiroute = API_BASE_URL;
+
 
   const submitFormData = async (values: any) => {
     try {
@@ -67,7 +70,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
         password:values.password  // Placeholder pour avatar_uuid
       };
 
-      const url = `https://archive-doc-app.onrender.com/api/v1/users/`;
+      const url = `${apiroute}/users/`;
 
       const response = await fetch(url, {
         method: "POST",

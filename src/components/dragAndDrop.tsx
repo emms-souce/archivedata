@@ -1,6 +1,8 @@
 import React, { useState, ChangeEvent, DragEvent } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_BASE_URL } from "./config/apiRoutes";
+
 
 const DragAndDrop: React.FC = () => {
   const [dragging, setDragging] = useState(false);
@@ -37,6 +39,8 @@ const DragAndDrop: React.FC = () => {
       await uploadFile(files[i]); // Appel de la fonction pour envoyer chaque fichier
     }
   };
+    const apiroute = API_BASE_URL;
+
 
   const uploadFile = async (file: File) => {
     const formData = new FormData();
@@ -45,7 +49,7 @@ const DragAndDrop: React.FC = () => {
 
     try {
       const response = await fetch(
-        "https://archive-doc-app.onrender.com/api/v1/storages/upload",
+        `${apiroute}/storages/upload`,
         {
           method: "POST",
           headers: {
@@ -89,6 +93,7 @@ const DragAndDrop: React.FC = () => {
       >
         <input
           id="fileInput"
+          accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
           type="file"
           className="hidden"
           multiple

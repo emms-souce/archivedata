@@ -19,12 +19,12 @@ const LogoutModal: React.FC = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="z-[98] relative">
       <button
         onClick={() => setIsModalOpen(true)}
         className=""
       >
-        <div className='rounded-full bg-gray-500 p-1'><FaUser className="text-white"/></div>
+        <div className='rounded-full bg-gray-500 mx-5 p-2 '> <FaUser className="text-white"/></div>
       </button>
 
       {isModalOpen && (

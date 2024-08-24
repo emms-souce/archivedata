@@ -2,7 +2,9 @@
 
 import SearchBar from "./component/searchBar";
 import PdfCard from "@/components/cardItem";
+import { API_BASE_URL } from "@/components/config/apiRoutes";
 import React, { useEffect, useState } from "react";
+
 
 type fileItem = {
   uuid: string;
@@ -18,10 +20,13 @@ type fileItem = {
   date_added: string;
 };
 
+  const apiroute = API_BASE_URL;
+
+
 async function fetchFileItems(): Promise<fileItem[]> {
   try {
     const response = await fetch(
-      "https://archive-doc-app.onrender.com/api/v1/storages/documents?page=1&per_page=30&order=desc&order_filed=date_added",
+     `${apiroute}/storages/documents?page=1&per_page=30&order=desc&order_filed=date_added`,
       {
         method: "GET",
         headers: {
