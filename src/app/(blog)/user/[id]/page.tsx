@@ -100,17 +100,17 @@ const DocumentDetail: React.FC = () => {
           onClick={toggleSummary}
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors"
         >
-          {summaryVisible ? "Masquer le résumé" : "Génerer le résumé"}
+          {summaryVisible ? "Masquer le resumer" : "Génerer le résumé"}
         </button>
       </div>
-      {loadingSummary ? (
+      {loadingSummary && !summaryVisible ? (
         <div className="text-gray-500 flex mt-4 items-center">
           <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-blue-500 mr-4"></div>{" "}
           Génération du résumé...
         </div>
       ) : (
         summaryVisible && (
-          <p className="text-gray-700 mt-4">
+          <p className="text-gray-700 mt-4 px-5 text-justify">
             {document.summary || "Aucun résumé disponible"}
           </p>
         )

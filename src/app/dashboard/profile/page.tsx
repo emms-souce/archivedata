@@ -64,7 +64,7 @@ const Profile: React.FC = () => {
         className="w-full  items-center flex cursor-pointer"
       >
         <FaArrowCircleLeft className=" text-blue-500 mr-2" />
-        <button className=" text-blue-600  rounded hover:text-blue-700 hover:underline transition-colors">
+        <button className=" text-blue-600 max-md:text-sm rounded hover:text-blue-700 hover:underline transition-colors">
           Retour au tableau de bord
         </button>
       </div>

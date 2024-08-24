@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import * as Yup from "yup";
 
 
@@ -89,6 +89,7 @@ const Login = () => {
 
   return (
     <div className="flex flex-col md:flex-row h-screen">
+      <ToastContainer/>
       <div className="md:w-1/2 w-full flex flex-col justify-center items-center bg-blue-500 p-4">
         <div className="text-3xl font-bold text-white">BankDocs</div>
         <Image src={"/Animation.gif"} width={200} height={200} alt="" />
