@@ -15,7 +15,7 @@ export default function RootLayout({
 const router = useRouter();
      useEffect(() => {
        const token = localStorage.getItem("token");
-       const userType = localStorage.getItem("userType");
+       const userType = localStorage.getItem("role");
         
        if (userType !== "Administrateur") {
          router.push("/login");
