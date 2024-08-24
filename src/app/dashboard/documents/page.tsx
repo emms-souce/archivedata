@@ -2,7 +2,7 @@
 
 import { API_BASE_URL } from "@/components/config/apiRoutes";
 import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 
 interface Document {
@@ -109,6 +109,7 @@ const DocumentsPage: React.FC = () => {
 
   return (
     <div className="container mx-auto p-5">
+      <ToastContainer/>
       <div className="text-2xl font-bold text-gray-700 mb-4">Liste des Documents</div>
       <div className="mb-4">
         <input

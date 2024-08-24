@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { FaArrowCircleLeft } from "react-icons/fa";
 
 
 type User = {
@@ -46,21 +47,27 @@ const Profile: React.FC = () => {
         </h2>
         <div className="mb-4">
           <p className="text-gray-700 font-semibold">Nom :</p>
-          <p className="text-gray-900 font-semibold">{user.firstname}{ user.lastname}</p>
+          <p className=" font-semibold text-blue-400">{user.firstname}{ user.lastname}</p>
         </div>
         <div className="mb-4">
           <p className="text-gray-700 font-semibold">Email :</p>
-          <p className="text-gray-900 font-semibold">{user.email}</p>
+          <p className="text-blue-400 font-semibold">{user.email}</p>
         </div>
         <div className="mb-4">
           <p className="text-gray-700 font-semibold">Rôle :</p>
-          <p className="text-gray-900">{user.role.title_fr}</p>
+          <p className="text-blue-400 font-semibold">{user.role.title_fr}</p>
         </div>
 
         <div className="flex items-center justify-between mt-6">
-          <Link href="/dashboard" className="text-blue-500 hover:underline">
-            Retour au tableau de bord
-          </Link>
+          <div
+        onClick={() => router.push("/dashboard")}
+        className="w-full  items-center flex cursor-pointer"
+      >
+        <FaArrowCircleLeft className=" text-blue-500 mr-2" />
+        <button className=" text-blue-600  rounded hover:text-blue-700 hover:underline transition-colors">
+          Retour au tableau de bord
+        </button>
+      </div>
           <button
             onClick={() => {
               localStorage.clear();
