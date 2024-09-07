@@ -5,7 +5,6 @@ import PdfCard from "@/components/cardItem";
 import { API_BASE_URL } from "@/components/config/apiRoutes";
 import React, { useEffect, useState } from "react";
 
-
 type fileItem = {
   uuid: string;
   public_id: string;
@@ -20,13 +19,12 @@ type fileItem = {
   date_added: string;
 };
 
-  const apiroute = API_BASE_URL;
-
+const apiroute = API_BASE_URL;
 
 async function fetchFileItems(): Promise<fileItem[]> {
   try {
     const response = await fetch(
-     `${apiroute}/storages/documents?page=1&per_page=30&order=desc&order_filed=date_added`,
+      `${apiroute}/storages/documents?page=1&per_page=30&order=desc&order_filed=date_added`,
       {
         method: "GET",
         headers: {
@@ -123,50 +121,60 @@ const HomePage: React.FC = () => {
   const totalPages = Math.ceil(filteredDocuments.length / ITEMS_PER_PAGE);
 
   return (
-    <div className="w-full bg-white">
-      <div className="w-full text-gray-600 mt-5 font-bold py-4 text-2xl text-center">
-        Quel Document Recherchez-vous? Consultez Notre Banque de Documents!
-      </div>
+    <div className="bg-gray-100 min-h-screen">
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold text-gray-800 mb-8 text-center">
+          Consultez Notre Banque de Documents
+        </h1>
 
-      <div className="container mx-auto px-4">
         <SearchBar onSearch={handleSearch} />
 
-        {/* Filters */}
-        <div className="flex justify-between mb-4">
-          <div>
-            <div className="font-bold">Filtrer par type</div>
+        <div className="flex flex-col md:flex-row justify-between mb-8 mt-6">
+          <div className="mb-4 md:mb-0">
+            <label
+              htmlFor="type-filter"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Filtrer par type
+            </label>
             <select
+              id="type-filter"
               onChange={(e) => handleFilter(e.target.value, "")}
-              className="p-2 border border-gray-300 rounded-lg"
+              className="w-full md:w-auto p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="">Tous les types</option>
               <option value="pdf">PDF</option>
               <option value="docx">DOCX</option>
               <option value="jpg">JPG</option>
-              {/* Add more options based on your file types */}
             </select>
           </div>
 
           <div>
-            <div className="font-bold"> Filtrer par date d'ajout</div>
+            <label
+              htmlFor="date-filter"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Filtrer par date d'ajout
+            </label>
             <input
+              id="date-filter"
               type="date"
               onChange={(e) => handleFilter("", e.target.value)}
-              className="p-2 border border-gray-300 rounded-lg"
+              className="w-full md:w-auto p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
         </div>
 
         {loading ? (
-          <div className="text-center text-gray-500 mt-6">
-            Chargement des documents...
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {selectedDocuments.map((doc) => (
               <PdfCard
-                id={doc.public_id}
                 key={doc.uuid}
+                id={doc.public_id}
                 title={doc.file_name}
                 description={doc.summary || "No description available"}
                 fileSize={`${(doc.size / 1024).toFixed(2)} Kb`}
@@ -176,44 +184,48 @@ const HomePage: React.FC = () => {
           </div>
         )}
 
-        {/* Pagination */}
         {!loading && (
-          <div className="flex justify-end mt-6">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              className={`px-3 py-1 border rounded-lg ${
-                currentPage === 1
-                  ? "text-gray-400 cursor-not-allowed"
-                  : "text-blue-500 hover:bg-blue-100"
-              }`}
+          <div className="flex justify-center mt-8">
+            <nav
+              className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+              aria-label="Pagination"
             >
-              Précédent
-            </button>
-            {[...Array(totalPages)].map((_, i) => (
               <button
-                key={i}
-                onClick={() => handlePageChange(i + 1)}
-                className={`px-3 py-1 border rounded-lg mx-1 ${
-                  currentPage === i + 1
-                    ? "bg-blue-500 text-white"
-                    : "text-blue-500 hover:bg-blue-100"
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className={`relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium ${
+                  currentPage === 1
+                    ? "text-gray-300 cursor-not-allowed"
+                    : "text-gray-500 hover:bg-gray-50"
                 }`}
               >
-                {i + 1}
+                Précédent
               </button>
-            ))}
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              className={`px-3 py-1 border rounded-lg ${
-                currentPage === totalPages
-                  ? "text-gray-400 cursor-not-allowed"
-                  : "text-blue-500 hover:bg-blue-100"
-              }`}
-            >
-              Suivant
-            </button>
+              {[...Array(totalPages)].map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => handlePageChange(i + 1)}
+                  className={`relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium ${
+                    currentPage === i + 1
+                      ? "z-10 bg-blue-50 border-blue-500 text-blue-600"
+                      : "text-gray-500 hover:bg-gray-50"
+                  }`}
+                >
+                  {i + 1}
+                </button>
+              ))}
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className={`relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium ${
+                  currentPage === totalPages
+                    ? "text-gray-300 cursor-not-allowed"
+                    : "text-gray-500 hover:bg-gray-50"
+                }`}
+              >
+                Suivant
+              </button>
+            </nav>
           </div>
         )}
       </div>

@@ -2,19 +2,29 @@
 
 import DragAndDrop from "@/components/dragAndDrop";
 import React from "react";
+import { FaFileUpload } from "react-icons/fa";
 
 const Page = () => {
   return (
-    <div className="py-10 container mx-auto w-full h-full flex flex-col  ">
-      <div className='className="inline-block text-lg  md:text-2xl text-gray-700 font-bold py-2 px-2 md:px-6 rounded-lg  transition-colors"'>
-        Ajouter un Nouveau document
+    <div className="py-12 container mx-auto w-full h-full flex flex-col items-center bg-gray-50">
+      <div className="mb-8 text-center">
+        <h1 className="text-3xl md:text-4xl text-gray-800 font-bold mb-2">
+          Ajouter un Nouveau Document
+        </h1>
+        <div className="w-24 h-1 bg-blue-500 mx-auto"></div>
       </div>
-      <div className=" md:text-lg text-center text-blue-500 font-semibold ">
-        Cette espace vous permet d'ajouter un document <br />
-        l'ajout se fera automatiquement 
-      </div>
-      <div className="mt-5 flex justify-center ">
-        <DragAndDrop />
+      <div className="max-w-2xl w-full bg-white rounded-lg shadow-md p-8">
+        <div className="flex items-center justify-center mb-6">
+          <FaFileUpload className="text-5xl text-blue-500 " />
+          <p className="text-lg text-gray-600">
+            Cet espace vous permet d'ajouter un document.
+            <br />
+            L'ajout se fera automatiquement.
+          </p>
+        </div>
+        <div className="flex justify-center">
+          <DragAndDrop />
+        </div>
       </div>
     </div>
   );

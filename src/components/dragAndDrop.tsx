@@ -78,7 +78,7 @@ const DragAndDrop: React.FC = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative ">
       <ToastContainer />
       <div
         className={`p-5 w-[300px] h-[300px] md:w-[500px] md:h-[400px] border-2 border-dashed rounded-lg transition-colors duration-300 ${

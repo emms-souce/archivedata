@@ -17,49 +17,51 @@ const PdfCard: React.FC<PdfCardProps> = ({ format, title, fileSize, id }) => {
   const router = useRouter();
 
   function truncateString(input: string): string {
-    if (input.length <= 15) {
+    if (input.length <= 20) {
       return input;
     }
-    return input.slice(0, 15) + "...";
+    return input.slice(0, 20) + "...";
   }
+
   return (
     <div
-      onClick={() => {
-        if (localStorage.getItem("token")) {
-          router.push(`/user/${id}`);
-        }
-      }}
-      className="bg-gray-100 shadow-xl rounded-lg p-5 max-w-sm transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl  hover:bg-opacity-30 border border-gray-300 hover:border-blue-500"
-    >
-      <div className="flex items-center justify-between">
-        <h2 className="text-lg font-bold text-gray-800">
-          {truncateString(title)}
-        </h2>
-        <Image src="/docs.png" alt="PDF Icon" width={32} height={32} />
-      </div>
-
-      <div className="text-gray-500 text-sm mt-3">
-        Typedu fichier: <span className="font-bold">{format}</span>{" "}
-      </div>
-
-      <div className="flex justify-between items-center mt-5">
-        <span className="text-gray-500 text-sm">
-          Taille du fichier: <span className="font-bold">{fileSize}</span>{" "}
-        </span>
-        <button
-          onClick={() => {
+     onClick={(e) => {
+            e.stopPropagation();
             if (localStorage.getItem("token")) {
               router.push(`/user/${id}`);
             } else {
-              toast.error(
-                "vous devez être connecter pour consulter le Document"
-              );
+              toast.error("Vous devez être connecté pour consulter le document");
             }
           }}
-          rel="noopener noreferrer"
-          className="bg-blue-400 text-white z-10 py-1 px-4 rounded-lg transition-colors duration-300 hover:bg-blue-500 hover:shadow-md hover:underline"
+      className="bg-white shadow-md rounded-lg p-6 max-w-sm transform transition-all duration-300 hover:scale-102 hover:shadow-lg hover:border-blue-500 border border-gray-200"
+    >
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-semibold text-gray-800">
+          {truncateString(title)}
+        </h2>
+        <Image src="/docs.png" alt="PDF Icon" width={40} height={40} className="opacity-80" />
+      </div>
+
+      <div className="text-gray-600 text-sm mb-4">
+        Type de fichier: <span className="font-medium text-gray-800">{format}</span>
+      </div>
+
+      <div className="flex justify-between items-center">
+        <span className="text-gray-600 text-sm">
+          Taille: <span className="font-medium text-gray-800">{fileSize}</span>
+        </span>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            if (localStorage.getItem("token")) {
+              router.push(`/user/${id}`);
+            } else {
+              toast.error("Vous devez être connecté pour consulter le document");
+            }
+          }}
+          className="bg-blue-500 text-white py-2 px-4 rounded-md transition-colors duration-300 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
         >
-          Details
+          Détails
         </button>
       </div>
     </div>

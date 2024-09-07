@@ -1,24 +1,29 @@
 import LogoutModal from "./logout";
+import Link from "next/link";
 import React from "react";
 import { FaSearch, FaUser } from "react-icons/fa";
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   return (
-    <div className="w-full fixed z-[14] flex justify-between items-center h-14 pl-4 pr-2 bg-blue-300 shadow-md">
-      <div className="flex items-center space-x-3">
-        {/* Logo or Icon */}
-        <p className="text-white text-xl md:text-3xl font-bold pl-10 md:pl-2">
-          Pannel d'Administration
-        </p>
-      </div>
+    <nav className="bg-blue-600 shadow-md fixed w-full z-10 pl-5">
+      <div className="max-w-7xl mx-auto px-10 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <div className="flex items-center">
+            <Link href="/dashboard" className="flex-shrink-0 ">
+              <h1 className="text-white text-xl md:text-2xl font-bold">
+                Panneau d'Administration
+              </h1>
+            </Link>
+          </div>
 
-     
-
-      {/* User and Logout */}
-      <div className="flex z-[9] items-center ">
-        <LogoutModal />
+          <div className="flex items-center">           
+            {/* <div className=" relative ">
+              <LogoutModal />
+            </div> */}
+          </div>
+        </div>
       </div>
-    </div>
+    </nav>
   );
 };
 

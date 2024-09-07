@@ -5,39 +5,36 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 
-
-// Importer des icônes pour le menu
-
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [login, setLogin] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
 
-  const router = useRouter()
   const handleLogout = () => {
     localStorage.clear();
-    router.push("/login")
+    setIsLoggedIn(false);
+    router.push("/login");
   };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-   useEffect(() => {
-     const token = localStorage.getItem("token");
-     if (token) {
-       setLogin(false)
-     }
-   }, []);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, []);
+
   return (
-    <nav className="bg-blue-500 p-4 shadow-md">
+    <nav className="bg-blue-600 p-4 shadow-lg">
       <div className="container mx-auto flex justify-between items-center">
-        <Link href="/user" className="text-white font-bold text-lg">
+        <Link href="/user" className="text-white font-bold text-xl">
           BankDocs
         </Link>
         <div className="lg:hidden">
           <button
             onClick={toggleMenu}
-            className="text-white focus:outline-none"
+            className="text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 rounded-md"
           >
             {isMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
           </button>
@@ -45,46 +42,34 @@ const Navbar: React.FC = () => {
         <ul
           className={`${
             isMenuOpen ? "flex" : "hidden"
-          } flex-col lg:flex-row lg:space-x-6 space-y-4 lg:space-y-0 lg:flex absolute lg:static top-16 left-0 w-full lg:w-auto bg-blue-500 lg:bg-transparent p-4 lg:p-0 z-20`}
+          } flex-col lg:flex-row lg:space-x-6 space-y-4 lg:space-y-0 lg:flex absolute lg:static top-16 left-0 w-full lg:w-auto bg-blue-600 lg:bg-transparent p-4 lg:p-0 z-20 transition-all duration-300 ease-in-out`}
         >
-          <li 
-            onClick={()=>{setIsMenuOpen(false)}}
-          >
-            
-            <Link href="/user"  className="text-white font-semibold hover:text-gray-200">
-              Accueil
-            </Link>
-          </li>
-          <li
-           onClick={()=>{setIsMenuOpen(false)}}
-          >
-            <Link href="/about" className="text-white font-semibold hover:text-gray-200">
-              À Propos
-            </Link>
-          </li>
-          <li
-            onClick={()=>{setIsMenuOpen(false)}}
-          >
-            <Link href="/contact" className="text-white font-semibold hover:text-gray-200">
-              Contact
-            </Link>
-          </li>
-          <li
-            onClick={()=>{setIsMenuOpen(false)}}
-          >
-            {login ? <Link
-              onClick={()=>{setIsMenuOpen(false)}}
-              href="/login"
-              className="inline-block bg-green-500 text-white font-semibold py-1 px-2 rounded-lg shadow-md hover:bg-green-600 transition-colors"
-            >
-              Se Connecter
-            </Link> : <div
-              className="inline-block cursor-pointer bg-red-400 text-white font-semibold py-1 px-2 rounded-lg shadow-md hover:bg-red-500 transition-colors"
-                onClick={() => { handleLogout(); setIsMenuOpen(false)}}
-            >
-                Se deconnecter
-            </div>
-            }
+          {["Accueil", "À Propos", "Contact"].map((item) => (
+            <li key={item} onClick={() => setIsMenuOpen(false)}>
+              <Link
+                href={item === "Accueil" ? "/user" : `/${item.toLowerCase().replace(" ", "-").replace("à", "a")}`}
+                className="text-white font-semibold hover:text-blue-200 transition-colors duration-200"
+              >
+                {item}
+              </Link>
+            </li>
+          ))}
+          <li onClick={() => setIsMenuOpen(false)}>
+            {isLoggedIn ? (
+              <button
+                onClick={handleLogout}
+                className="bg-red-500 text-white font-semibold py-2 px-4 rounded-md shadow-md hover:bg-red-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+              >
+                Se déconnecter
+              </button>
+            ) : (
+              <Link
+                href="/login"
+                className="bg-green-500 text-white font-semibold py-2 px-4 rounded-md shadow-md hover:bg-green-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+              >
+                Se Connecter
+              </Link>
+            )}
           </li>
         </ul>
       </div>
