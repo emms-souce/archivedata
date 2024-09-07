@@ -25,7 +25,7 @@ const Sidebar = () => {
     { name: "Utilisateurs", href: "/dashboard/users", icon: <FaUsers /> },
   ];
 
-  const isActive = (href: string) => router.pathname === href;
+  // const isActive = (href: string) => router.pathname === href;
 
   useEffect(() => {
     const handleResize = () => {
@@ -77,9 +77,8 @@ const Sidebar = () => {
                 <div
                   onClick={() => setIsOpen(false)}
                   className={`py-3 px-6 mb-2 flex items-center transition-colors duration-200 ${
-                    isActive(item.href)
-                      ? "bg-blue-500 text-white"
-                      : "text-blue-100 bg-blue-800 hover:bg-blue-600"
+                   
+                       "text-blue-100 bg-blue-800 hover:bg-blue-600"
                   }`}
                 >
                   <span className="mr-3">{item.icon}</span>
