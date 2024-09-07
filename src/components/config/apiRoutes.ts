@@ -11,4 +11,4 @@
 // };
 
 
-export const API_BASE_URL = "https://archive-doc-app.onrender.com/api/v1";
+export const API_BASE_URL = "http://13.60.52.12/api/v1";
