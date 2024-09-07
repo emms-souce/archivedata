@@ -5,7 +5,7 @@ import SignupModal from "@/components/singUpModal";
 import UpdateModal from "@/components/updateModal";
 import React, { useEffect, useState } from "react";
 import { FaSearch, FaTrash, FaEdit, FaUserPlus } from "react-icons/fa";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 interface Role {
   uuid: string;
@@ -141,9 +141,10 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4">
+      <ToastContainer />
+
       <div className="flex justify-between items-center mb-6">
-       
-        <SignupModal />
+        <SignupModal onUserAdd={() => setC(!c)} />
       </div>
 
       <div className="mb-6 relative">

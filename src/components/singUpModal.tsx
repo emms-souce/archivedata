@@ -1,7 +1,9 @@
+import { API_BASE_URL } from "./config/apiRoutes";
 import { useFormik, FormikTouched, FormikErrors } from "formik";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
+
 
 interface FormValues {
   firstName: string;
@@ -11,8 +13,11 @@ interface FormValues {
   confirmPassword: string;
   role: string;
 }
+interface Props {
+  onUserAdd?: () => void;
+}
 
-const SignupModal = () => {
+const SignupModal:React.FC<Props> = ({onUserAdd}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [change, setChange] = useState(false);
@@ -43,6 +48,8 @@ const SignupModal = () => {
     console.log("ok");
   }, [change]);
 
+  const apiRoute = API_BASE_URL;
+
   const submitFormData = async (values: FormValues) => {
     try {
       const token = localStorage.getItem("token");
@@ -62,7 +69,7 @@ const SignupModal = () => {
       };
 
       const response = await fetch(
-        "https://archive-doc-app.onrender.com/api/v1/users/create",
+        `${apiRoute}/users/create`,
         {
           method: "POST",
           headers: {
@@ -79,6 +86,7 @@ const SignupModal = () => {
       }
       toast.success("Utilisateur créé avec succès");
       setIsModalOpen(false);
+      onUserAdd && onUserAdd();
       const data = await response.json();
       console.log("Données envoyées avec succès :", data);
       setChange(!change);

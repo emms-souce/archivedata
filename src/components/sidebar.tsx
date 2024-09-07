@@ -52,7 +52,7 @@ const Sidebar = () => {
       )}
 
       <button
-        className="md:hidden fixed top-4 left-4 z-50 p-2 bg-blue-600 text-white rounded-md shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+        className="md:hidden fixed top-3 left-4 z-50 p-2 bg-blue-600 text-white rounded-md shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
