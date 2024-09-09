@@ -101,6 +101,11 @@ const DocumentDetail: React.FC = () => {
     }
   };
 
+  const truncateFileName = (fileName: string, maxLength: number = 30) => {
+    if (fileName.length <= maxLength) return fileName;
+    return fileName.slice(0, maxLength) + '... ';
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -125,7 +130,9 @@ const DocumentDetail: React.FC = () => {
       <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
         <div className="px-6 py-8">
           <div className="flex items-center justify-between mb-6">
-            <h1 className="text-3xl font-bold text-gray-800">{document.file_name}</h1>
+            <h1 className="text-3xl font-bold text-gray-800" title={document.file_name}>
+              {truncateFileName(document.file_name)}
+            </h1>
             <FaFileAlt className="text-4xl text-blue-500" />
           </div>
           

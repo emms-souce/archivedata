@@ -81,11 +81,13 @@ const Login = () => {
   return (
     <div className="flex flex-col md:flex-row h-screen bg-gray-100">
       <ToastContainer />
-      <div className="md:w-1/2 w-full flex flex-col justify-center items-center bg-blue-600 p-8">
+      <div className="md:w-1/2   w-full flex flex-col justify-center items-center bg-blue-600  md:p-8">
         <div className="text-4xl font-bold text-white mb-4">BankDocs</div>
-        <Image src="/Animation.gif" width={300} height={300} alt="BankDocs Animation" className="rounded-lg shadow-lg" />
+        <Image src="/Animation.gif" width={400} height={400} alt="BankDocs Animation" className="rounded-lg shadow-lg hidden md:block" />
+        <Image src="/Animation.gif"  width={250} height={250} alt="BankDocs Animation" className="rounded-lg shadow-lg md:hidden" />
+
       </div>
-      <div className="md:w-1/2 w-full flex justify-center items-center p-8">
+      <div className="md:w-1/2 w-full flex justify-center items-center md:p-8">
         <form className="w-full max-w-md bg-white shadow-lg rounded-lg p-8" onSubmit={formik.handleSubmit}>
           <h2 className="text-3xl mb-6 text-center text-blue-600 font-bold">
             Se connecter
