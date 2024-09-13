@@ -17,12 +17,13 @@ const Card: React.FC<CardProps> = ({
   onButtonClick,
 }) => {
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-105">
-      <div className="relative h-56 w-full">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-105 p-5">
+      <div className="relative h-56 w-full flex justify-center ">
         <Image
+          width={300}
+          height={300}
           src={imageUrl}
           alt={title}
-          layout="fill"
           objectFit="cover"
           className="transition-transform duration-300 hover:scale-110 object-cover"
         />

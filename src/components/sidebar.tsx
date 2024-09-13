@@ -12,6 +12,7 @@ import {
   FaFileUpload,
   FaUsers,
   FaUserCircle,
+  FaHome,
 } from "react-icons/fa";
 
 const Sidebar = () => {
@@ -86,8 +87,10 @@ const Sidebar = () => {
                 </div>
               </Link>
             ))}
+       
           </nav>
         </div>
+        <div>
 
         <Link
           href="/dashboard/profile"
@@ -99,6 +102,18 @@ const Sidebar = () => {
             <span>Mon profil</span>
           </div>
         </Link>
+        <Link
+          href="/"
+          className="mb-8 mx-2"
+          onClick={() => setIsOpen(false)}
+        >
+          <div className="py-3 px-6 flex items-center bg-blue-800 text-white rounded-lg hover:bg-blue-900 transition-colors duration-200">
+            <FaHome className="mr-3" />
+            <span>Accueil utilisateur</span>
+          </div>
+        </Link>
+        </div>
+
       </div>
     </>
   );

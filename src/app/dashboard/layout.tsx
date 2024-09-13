@@ -22,7 +22,7 @@ const router = useRouter();
        }
      }, []);
   return (
-    <div className="flex w-full bg-white shadow-lg max-w-[1800px] mx-auto">
+    <div className="flex w-full bg-white shadow-lg  mx-auto">
       <ToastContainer/>
           <Sidebar/>
           <div className="w-full">
